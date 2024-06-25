@@ -24,6 +24,7 @@ import Admin from "./components/admin";
 import MessageComponent from "./components/message";
 import ChatSignIn from "./components/sign-in";
 import { ChatContext, type ChatType } from "./context/ChatContext";
+import { actionCompleted } from "pubnub-demo-integration"
 
 export const Chat = ({ playbackId }: { playbackId: string }) => {
   const {
@@ -430,6 +431,14 @@ export const Chat = ({ playbackId }: { playbackId: string }) => {
       } catch (e) {
         console.log("Failed to send message: ", e);
       }
+
+      // DEMO: Used by the interactive demo
+      actionCompleted({
+        action: "Send a Message",
+        debug: true,
+      });
+      // END DEMO: Used by the interactive demo
+
       setInputMessage("");
     }
   };
