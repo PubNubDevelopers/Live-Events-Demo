@@ -4,6 +4,7 @@ import { ArrowUpRight } from "lucide-react";
 import { cookies, headers } from "next/headers";
 import { BroadcastWithControls } from "../components/broadcast/Broadcast";
 import { CreateLivestreamButton } from "./create-livestream-button";
+import { actionCompleted } from "pubnub-demo-integration";
 
 export default async function Home() {
   const streamKey = cookies().get("stream-key")?.value;
@@ -57,6 +58,14 @@ export default async function Home() {
                 target="_blank"
                 rel="noreferrer"
                 href={playbackUrl}
+                onClick={() => {
+                  // DEMO: Used by the interactive demo
+                  actionCompleted({
+                    action: "Open the viewer URL",
+                    debug: true,
+                  });
+                  // END DEMO: Used by the interactive demo
+                }}
               >
                 Open viewer URL <ArrowUpRight className="h-5 w-5" />
               </a>

@@ -1,12 +1,12 @@
 {
   "features": [
-    "Create a Live Stream",
-    "Start a Broadcast",
-    "Open the Viewer URL",
-    "Create a User",
-    "Send a Message",
-    "Open the Admin Modal",
-    "Mute a User",
-    "Ban a User"
+    "Create a livestream",
+    "Start a broadcast",
+    "Open the viewer URL",
+    "Sign in as a viewer",
+    "Send a message",
+    "Open the admin modal",
+    "Mute a user",
+    "Ban a user"
   ]
 }

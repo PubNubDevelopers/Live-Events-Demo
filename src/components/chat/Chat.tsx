@@ -96,6 +96,13 @@ export const Chat = ({ playbackId }: { playbackId: string }) => {
     async function initUser() {
       if (!chatInstance || !username) return;
       await createPubnubUser(username);
+
+      // DEMO: Used by the interactive demo
+      actionCompleted({
+        action: "Sign in as a viewer",
+        debug: true,
+      });
+      // END DEMO: Used by the interactive demo
     }
     initUser();
   }, [chatInstance, username, createPubnubUser]);
@@ -375,6 +382,13 @@ export const Chat = ({ playbackId }: { playbackId: string }) => {
     } catch (error) {
       console.log("Error Muting User: ", error);
     }
+
+    // DEMO: Used by the interactive demo
+    actionCompleted({
+      action: "Mute a user",
+      debug: true,
+    });
+    // END DEMO: Used by the interactive demo
   };
 
   /// As a admin you can ban another user. If you are the user that has been banned you will receive this event by listening to your userId as a channel
@@ -412,6 +426,13 @@ export const Chat = ({ playbackId }: { playbackId: string }) => {
     } catch (error) {
       console.log("Error Banning User: ", error);
     }
+
+    // DEMO: Used by the interactive demo
+    actionCompleted({
+      action: "Ban a user",
+      debug: true,
+    });
+    // END DEMO: Used by the interactive demo
   };
 
   /// Handle changes to the chat input field
@@ -434,7 +455,7 @@ export const Chat = ({ playbackId }: { playbackId: string }) => {
 
       // DEMO: Used by the interactive demo
       actionCompleted({
-        action: "Send a Message",
+        action: "Send a message",
         debug: true,
       });
       // END DEMO: Used by the interactive demo
@@ -654,7 +675,17 @@ export const Chat = ({ playbackId }: { playbackId: string }) => {
               flaggedMessages={flaggedMessages}
               storedUsers={storedUsers}
               chatMessages={chatMessages}
-              setIsModalOpen={setIsModalOpen}
+              setIsModalOpen={(x) => {
+                  setIsModalOpen(x);
+
+                  // DEMO: Used by the interactive demo
+                  actionCompleted({
+                    action: "Open the admin modal",
+                    debug: true,
+                  });
+                  // END DEMO: Used by the interactive demo
+                }
+              }
               deleteMessage={deleteMessage}
               restoreMessage={restoreMessage}
             />
