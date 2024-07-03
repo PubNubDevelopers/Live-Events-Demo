@@ -540,7 +540,7 @@ export const Chat = ({ playbackId }: { playbackId: string }) => {
             >
               <span className="my-2 h-px w-full" />
               <div
-                className="min-h-[250px] max-h-[250px] md:max-h-full flex-grow overflow-scroll overflow-y-auto my-2 space-y-2"
+                className="min-h-[250px] max-h-[250px] md:max-h-full flex-grow overflow-y-auto my-2 space-y-2 custom-scrollbar"
                 onScroll={handleScroll}
                 ref={chatContainerRef}
               >

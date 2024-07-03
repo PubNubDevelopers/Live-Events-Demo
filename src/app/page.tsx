@@ -4,7 +4,7 @@ import { ArrowUpRight } from "lucide-react";
 import { cookies, headers } from "next/headers";
 import { BroadcastWithControls } from "../components/broadcast/Broadcast";
 import { CreateLivestreamButton } from "./create-livestream-button";
-import { actionCompleted } from "pubnub-demo-integration";
+import { ViewerURL } from "@/components/broadcast/ViewerURL";
 
 export default async function Home() {
   const streamKey = cookies().get("stream-key")?.value;
@@ -53,22 +53,7 @@ export default async function Home() {
 
             <div className="w-full max-w-2xl gap-2 flex flex-col items-center mx-auto transition animate-in fade-in-0 duration-1000">
               <BroadcastWithControls streamKey={streamKey} />
-              <a
-                className="flex items-center gap-1 hover:underline"
-                target="_blank"
-                rel="noreferrer"
-                href={playbackUrl}
-                onClick={() => {
-                  // DEMO: Used by the interactive demo
-                  actionCompleted({
-                    action: "Open the viewer URL",
-                    debug: true,
-                  });
-                  // END DEMO: Used by the interactive demo
-                }}
-              >
-                Open viewer URL <ArrowUpRight className="h-5 w-5" />
-              </a>
+              <ViewerURL playbackUrl={playbackUrl}></ViewerURL>
             </div>
           </div>
 
