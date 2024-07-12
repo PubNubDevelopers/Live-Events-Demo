@@ -24,6 +24,7 @@ import { actionCompleted } from "pubnub-demo-integration";
 export function BroadcastWithControls({ streamKey }: { streamKey: string }) {
 
   const boradcastActionCompleted = () => {
+    console.log("Boradcast action completed");
     // DEMO: Used by the interactive demo
     actionCompleted({
       action: "Start a broadcast",
