@@ -70,7 +70,7 @@ export const ChatContextProvider = ({ children }: { children: ReactNode }) => {
     //     type?: string
     // }
     const user = await chatInstance.currentUser.update({
-      name: username,
+      name: username
     });
     setUserInstance(user);
   };

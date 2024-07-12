@@ -3,7 +3,7 @@
 import { cn } from "@/lib/utils";
 import { faCog, faUser } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { type Channel, Membership, type Message, User } from "@pubnub/chat";
+import { type Channel, Membership, Message, User } from "@pubnub/chat";
 import { SendHorizontal } from "lucide-react";
 import { usePathname } from "next/navigation";
 import {
@@ -193,6 +193,12 @@ export const Chat = ({ playbackId }: { playbackId: string }) => {
     disconnectMessageStream,
     disconnectPresenseStream,
   ]);
+
+  /// Used t
+  useEffect(() => {
+    if (!chatMessages || chatMessages.length == 0) return
+    return Message.streamUpdatesOn(chatMessages, setChatMessages);
+  }, [chatMessages])
 
   /// Fetch history from the current channel
   /// Stroe all the current users in the stored users
@@ -466,27 +472,12 @@ export const Chat = ({ playbackId }: { playbackId: string }) => {
 
   /// Delete a Message
   const deleteMessage = async (newMessage: Message) => {
-    // Update the local state for the deleted message
-    // Use message.timetoken to locate the message in the list
-    setChatMessages((prevMessages) =>
-      prevMessages.map((message) =>
-        message.timetoken === newMessage.timetoken ? newMessage : message,
-      ),
-    );
-
     // Soft delete the message
     await deleteMessageAPI(newMessage.timetoken, newMessage.channelId);
   };
 
   /// Restore a Message
   const restoreMessage = async (newMessage: Message) => {
-    // Update local state for restored message
-    setChatMessages((prevMessages) =>
-      prevMessages.map((message) =>
-        message.timetoken === newMessage.timetoken ? newMessage : message,
-      ),
-    );
-
     // Restore the deleted message
     await restoreMessageAPI(newMessage.timetoken, newMessage.channelId);
   };
