@@ -155,7 +155,7 @@ export function BroadcastWithControls({ streamKey }: { streamKey: string }) {
           <Broadcast.EnabledIndicator
             className="gap-1 flex items-center justify-center"
             matcher={false}
-            onClick={() => boradcastActionCompleted}
+            onClick={() => boradcastActionCompleted()}
           >
             <EnableVideoIcon className="w-7 h-7" />
             <span className="text-sm">Start broadcast</span>
