@@ -19,8 +19,19 @@ import * as Broadcast from "@livepeer/react/broadcast";
 import { getIngest } from "@livepeer/react/external";
 import { toast } from "sonner";
 import { Settings } from "./Settings";
+import { actionCompleted } from "pubnub-demo-integration";
 
 export function BroadcastWithControls({ streamKey }: { streamKey: string }) {
+
+  const boradcastActionCompleted = () => {
+    // DEMO: Used by the interactive demo
+    actionCompleted({
+      action: "Start a broadcast",
+      debug: true,
+    });
+    // END DEMO: Used by the interactive demo
+  }
+
   return (
     <Broadcast.Root
       onError={(error) =>
@@ -143,6 +154,7 @@ export function BroadcastWithControls({ streamKey }: { streamKey: string }) {
           <Broadcast.EnabledIndicator
             className="gap-1 flex items-center justify-center"
             matcher={false}
+            onClick={() => boradcastActionCompleted}
           >
             <EnableVideoIcon className="w-7 h-7" />
             <span className="text-sm">Start broadcast</span>
