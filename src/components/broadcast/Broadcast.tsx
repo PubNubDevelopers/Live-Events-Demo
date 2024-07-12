@@ -24,7 +24,6 @@ import { actionCompleted } from "pubnub-demo-integration";
 export function BroadcastWithControls({ streamKey }: { streamKey: string }) {
 
   const boradcastActionCompleted = () => {
-    console.log("Boradcast action completed");
     // DEMO: Used by the interactive demo
     actionCompleted({
       action: "Start a broadcast",
@@ -152,14 +151,15 @@ export function BroadcastWithControls({ streamKey }: { streamKey: string }) {
 
       <Broadcast.LoadingIndicator matcher={false}>
         <Broadcast.EnabledTrigger className="rounded-md px-4 py-2 bg-white/5 hover:bg-white/10">
-          <Broadcast.EnabledIndicator
-            className="gap-1 flex items-center justify-center"
-            matcher={false}
-            onClick={() => boradcastActionCompleted()}
-          >
-            <EnableVideoIcon className="w-7 h-7" />
-            <span className="text-sm">Start broadcast</span>
-          </Broadcast.EnabledIndicator>
+          <div onClick={boradcastActionCompleted} className="cursor-pointer">
+            <Broadcast.EnabledIndicator
+              className="gap-1 flex items-center justify-center"
+              matcher={false}
+            >
+              <EnableVideoIcon className="w-7 h-7" />
+              <span className="text-sm">Start broadcast</span>
+            </Broadcast.EnabledIndicator>
+          </div>
           <Broadcast.EnabledIndicator
             className="gap-1 flex items-center justify-center"
             matcher={true}
