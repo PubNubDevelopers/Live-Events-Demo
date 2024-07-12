@@ -4,11 +4,20 @@ import { cn } from "@/lib/utils";
 import { Videotape } from "lucide-react";
 import { toast } from "sonner";
 import { createLivestream } from "./actions";
+import { actionCompleted } from "pubnub-demo-integration";
 
 export function CreateLivestreamButton({ className }: { className?: string }) {
   return (
     <form
       action={async () => {
+
+        // DEMO: Used by the interactive demo
+        actionCompleted({
+          action: "Create a livestream",
+          debug: true,
+        });
+        // END DEMO: Used by the interactive demo
+
         const result = await createLivestream();
 
         if (!result.success) {

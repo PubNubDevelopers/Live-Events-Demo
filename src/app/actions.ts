@@ -3,7 +3,6 @@
 import type { Stream } from "livepeer/models/components";
 import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
-import { actionCompleted } from "pubnub-demo-integration";
 
 export const createLivestream = async () => {
   try {
@@ -29,13 +28,6 @@ export const createLivestream = async () => {
     }
 
     revalidatePath("/");
-
-    // DEMO: Used by the interactive demo
-    actionCompleted({
-      action: "Create a livestream",
-      debug: true,
-    });
-    // END DEMO: Used by the interactive demo
 
     return {
       success: true,

@@ -12,6 +12,7 @@ import {
   useEffect,
   useRef,
   useState,
+  SetStateAction,
 } from "react";
 import { RotatingLines } from "react-loader-spinner";
 import Modal from "react-modal";
@@ -501,6 +502,17 @@ export const Chat = ({ playbackId }: { playbackId: string }) => {
     }
   };
 
+  const openModal = (open: SetStateAction<boolean>) => {
+    setIsModalOpen(open);
+
+    // DEMO: Used by the interactive demo
+    actionCompleted({
+      action: "Open the admin modal",
+      debug: true,
+    });
+    // END DEMO: Used by the interactive demo
+  }
+
   // use the playback ID as a unique ID to set up the chat
   return (
     <div
@@ -666,17 +678,7 @@ export const Chat = ({ playbackId }: { playbackId: string }) => {
               flaggedMessages={flaggedMessages}
               storedUsers={storedUsers}
               chatMessages={chatMessages}
-              setIsModalOpen={(x) => {
-                  setIsModalOpen(x);
-
-                  // DEMO: Used by the interactive demo
-                  actionCompleted({
-                    action: "Open the admin modal",
-                    debug: true,
-                  });
-                  // END DEMO: Used by the interactive demo
-                }
-              }
+              setIsModalOpen={(x) => openModal(x)}
               deleteMessage={deleteMessage}
               restoreMessage={restoreMessage}
             />
