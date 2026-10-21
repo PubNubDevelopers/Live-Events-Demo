@@ -130,8 +130,11 @@ export const Chat = ({ playbackId }: { playbackId: string }) => {
 
       setLoading(false);
 
-      // Join channel, able to listen to incoming messages
-      await channelInstance.join((message: Message) => {
+      // Join channel (creates the membership)
+      await channelInstance.join();
+
+      // Listen to incoming messages
+      channelInstance.onMessageReceived((message: Message) => {
         // Cache the stored user if a new user has sent a message
         if (!storedUsers.has(message.userId)) {
           chatInstance?.getUser(message.userId).then((user) => {
@@ -158,7 +161,7 @@ export const Chat = ({ playbackId }: { playbackId: string }) => {
       });
 
       // Join presence stream to listen when people hav joined the channel
-      const presenceStream = await channelInstance.streamPresence(
+      const presenceStream = channelInstance.onPresenceChanged(
         (userIds: string[]) => {
           setPresenceCount(userIds.length);
         },
@@ -282,7 +285,17 @@ export const Chat = ({ playbackId }: { playbackId: string }) => {
 
     // Start listening for report events
     if (isBroadcaster) {
-      // Listen to moderation events reported by "users" to the admin
+      // Listen to messages reported by "users" on this channel
+      channelInstance?.onMessageReported((report) => {
+        const messageTimeToken = report.messageTimetoken;
+        if (!messageTimeToken) return;
+        setFlaggedMessages((prevFlaggedMessages) => [
+          ...prevFlaggedMessages,
+          messageTimeToken,
+        ]);
+      });
+
+      // Listen to users reported by "users" to the admin
       chatInstance.listenForEvents({
         channel: "PUBNUB_INTERNAL_ADMIN_CHANNEL",
         type: "report",
@@ -351,11 +364,13 @@ export const Chat = ({ playbackId }: { playbackId: string }) => {
 
     setFlaggedUsers([...flaggedUsers, userId]);
 
-    // Get User
-    const user: User = (await chatInstance.getUser(userId)) ?? new User();
-
-    // Report a user
-    await user.report("Reported By User");
+    // Report a user to the admin channel
+    // Chat SDK 1.x removed user.report(), so emit the same "report" event it used to send
+    await chatInstance.emitEvent({
+      channel: "PUBNUB_INTERNAL_ADMIN_CHANNEL",
+      type: "report",
+      payload: { reason: "Reported By User", reportedUserId: userId },
+    });
   };
 
   /// As a admin you can mute another user. If you are the user that has been muted you will receive this event by listening to your userId as a channel

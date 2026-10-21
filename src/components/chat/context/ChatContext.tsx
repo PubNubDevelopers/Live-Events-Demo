@@ -34,7 +34,7 @@ export const ChatContextProvider = ({ children }: { children: ReactNode }) => {
       // Intialize the PubNub instance
       const pubNub = await Chat.init({
         publishKey: process.env.NEXT_PUBLIC_PUBLISH_KEY,
-        subscribeKey: process.env.NEXT_PUBLIC_SUBSCRIBE_KEY,
+        subscribeKey: process.env.NEXT_PUBLIC_SUBSCRIBE_KEY as string,
         userId: userId, // Ensure this is correctly obtained or set
       });
       setChatInstance(pubNub);
